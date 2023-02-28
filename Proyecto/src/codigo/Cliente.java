@@ -38,6 +38,7 @@ public class Cliente {
 		cliente1.teléfono=teléfono;
 		cliente1.fechaNacimiento=fechaNacimiento;
 		miListaCliente.add(cliente1);	
+		
 		if (miListaCliente.contains(cliente1)) {
 			ip = "El Cliente se creo";
 			Mando.cant_ClientesCreados++;
@@ -50,32 +51,48 @@ public class Cliente {
 	
 	
 	public String ELIMINAR_CLIENTE(int codigoCliente) {
-		//prueva
-				Cliente cliente1 = new Cliente();
-				String ip="";
-				//asignamos el parametro
-				cliente1.codigoCliente=codigoCliente;
-			    if (miListaCliente.contains(cliente1.codigoCliente)) {
-					ip = "El Cliente no se elimino";
-					Mando.errores++;					
-				} else {
-					ip = "El Cliente se ha eliminado";
-					Mando.cant_ClientesEliminados++;
-				}
-					
-				//prueva			
-			return ip;	
+		String ip="";
+		//asignamos el parametro
+	    this.codigoCliente=codigoCliente;
+	    int clienteBuscado = codigoCliente;
+	    Double montoTotal=1.00;
+	    
+	    for(int i = 0; i <Cuenta.miListaCuenta.size(); i++) {
+            if (Cuenta.miListaCuenta.get(i).getCodigoCliente()==clienteBuscado) {//if 6
+            	//evaluamos si el saldo de las cuentas del cliente estan a 0 
+            	if(Cuenta.miListaCuenta.get(i).getSaldo()==0.0) {
+            		ip="entro al if 2";
+            		//esta variable nos ayudara a revisar si todas la scuentas del cliente estan a 0.0
+            		montoTotal+=Cuenta.miListaCuenta.get(i).getSaldo();
+                }else {montoTotal++;}
+            }
+	}
+        /*
+         * evaluamos si la o las cuentas del cliente tenian dinero 
+         * por medio de un sumador llamado montoTotal
+         * */
+	    if(montoTotal==1) {
+	    	 for(int i = 0; i < Cliente.miListaCliente.size(); i++) {
+	    		 ip="entro al for 3 "+montoTotal+" "+Cliente.miListaCliente.get(i).getCodigoCliente()+"  "+clienteBuscado;
+	    		 if (Cliente.miListaCliente.get(i).getCodigoCliente()==clienteBuscado) {
+	    			 miListaCliente.remove(i);
+	    			 ip="Cliente eliminado ";return ip;
+	    		 }
+	    		 
+	    	 }
+	    	
+	    }else {//si el cliente auntiene sus cuentas con dinero
+	    	ip="Cliente no eliminado aun tiene saldo en sus cuentas";return ip;
+	    	}
+	    return ip;
+	    
 		}
+	
+	
+	
 	public int getCodigoCliente() {
-		Cliente objCliente = new Cliente();
-        return objCliente.codigoCliente;
+        return codigoCliente;
     }
-	
-	
-	 public String toString() {
-	        return "Clientes [ " + codigoCliente + " " +  nombre + " " +dirección+ " "+ teléfono+ " " +fechaNacimiento+ "]";
-	    }
-	 
 	
 
 	}

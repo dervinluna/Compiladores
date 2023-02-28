@@ -45,29 +45,32 @@ public class Cuenta {
 		return ip;
 	}
 	
-	
-	
 	//metodo eliminar cuenta
 	public String ELIMINAR_CUENTA(int codigoCuenta){
-		//prueva
-		Cuenta eliCuenta = new Cuenta();
 		String ip="";
 		//asignamos el parametro
 	    this.codigoCuenta=codigoCuenta;
-	    if (miListaCuenta.contains(eliCuenta.codigoCuenta)) {
-	    	ip = "La cuenta no se ha eliminado";
-			Mando.errores++;
-		} else {
-			
-			ip = "La cuenta se ha elimino";
-			Mando.cant_CuentasEliminadas++;
-		}		
+	    int cuentaBuscada = this.codigoCuenta;
+	    for(int i = 0; i < miListaCuenta.size(); i++) {
+	            
+            if (miListaCuenta.get(i).getcodigoCuenta()==cuentaBuscada) {//if 6
+            	//evaluamos si el saldo de la cuenta es 0
+            	if(miListaCuenta.get(i).getSaldo()==0.0) {
+            		//eliminamos la cuenta de la lista
+            	  miListaCuenta.remove(i);  
+            	  ip= "Cuenta encontrada y eliminada";
+            	  Mando.cant_RetGen++;
+            	  return ip;
+                }else {ip= "La cuenta no eliminada, aun tiene fondos"; Mando.errores++;return ip;}
+            }else {ip= "Cuenta no fue encontrada";Mando.errores++;}//if 6
+        
+	}
 	return ip;	
 	}
+	
 	//metodo obtener cod cliente
 	public int getCodigoCliente() {
-		Cuenta objCuenta = new Cuenta(0, null, 0, null, null);
-        return objCuenta.codigoCliente;
+        return codigoCliente;
     }
 	
 //metodo obtener cod cuenta
@@ -76,7 +79,7 @@ public class Cuenta {
     }
 	//actualizar saldo 
 	 public void setSaldo(double valor) {
-	        this.depositoInicial =+ valor;
+	        this.depositoInicial = valor;
 	    }
 	 //obtener saldo
 	 public Double getSaldo() {
@@ -85,15 +88,5 @@ public class Cuenta {
 	 public Double getDepoIni() {
 			return depositoInicial;
 		}
-	
-	
-	 public String toString() {
-	        return "Cuenta [ " + codigoCuenta + " " + nombreCuenta + " " + " "+ codigoCliente+ " " +depositoInicial+ " "+quetzales+ "]";
-	    }
-//metodo restar saldo
-	public void setResSaldo(double saldonew) {
-		// TODO Auto-generated method stub
-		this.depositoInicial =- saldonew;
-	}
 	 
 }

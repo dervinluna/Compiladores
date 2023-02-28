@@ -3,6 +3,7 @@
  */
 package codigo;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -101,36 +102,15 @@ public class Mando {
 		    			//en caso de que sea eliminar cliente
 		    		case "ELIMINAR_CLIENTE":
 		    			//cortamos la cadena extraemos lo que esta dentro del parentesis
-		    	    	 datos = texto.substring(texto.indexOf('(')+1,texto.indexOf(')'));
-		    	    	codigoCliente = Integer.parseInt(datos);
-		    	    	Cliente objetoEliC = new Cliente();
-		    	       // objetoEliC.ELIMINAR_CLIENTE(codigoCliente);
-		    			//prueva	//prueva
-		    	    	posicionEncontrada = -1;                   
-		    	    	for (int i = 0; i < Cliente.miListaCliente.size(); i++) {
-		    	    	    Cliente cliente = Cliente.miListaCliente.get(i);
-		    	    	    //System.out.print(i+" Posision: "+cuenta+" codigo: "+codigoCuenta+"codigo clse: "+cuenta.codigoCuenta+"\n");
-		    	    	    //verificamos si hay una cuenta con el mismo codigo en la lista
-		    	    	    int a=codigoCliente;
-		    	    	    int b=cliente.codigoCliente;
-		    	    	    //buscamos al cliente 
-		    	    	    if (a==0) {
-		    	    	    	 //Cuenta.miListaCuenta.get(posicionEncontrada);
-		    	    	        posicionEncontrada = i;
-		    	    	        break;     
-		    	    	    }
-		    	    	}
-		    	    	if (posicionEncontrada != -1) {
-		    	    	    System.out.println("El cliente no fue encontrado" );
-		    	    	} else {
-		    	    		int c = posicionEncontrada+1;
-		    	    		Cliente cliente = new Cliente();
-		    	    		System.out.println(cliente.ELIMINAR_CLIENTE(codigoCliente));
-		    	    		//System.out.println("La cuenta fue encontrada y sera eliminada" );
-		    	    		//Cuenta cuenta = Cuenta.miListaCuenta.get(c);
-		    	    		Cliente.miListaCliente.remove(c);		    	    	 
-		    	    	}
-		    	    	break;
+		    	    	datos = texto.substring(texto.indexOf('(')+1,texto.indexOf(')'));
+		    	    	partes = new String[0];
+		    	    	partes = datos.split(",");
+		    	    	objetoCliente = new Cliente();
+		    	    	codigoCliente = Integer.parseInt(partes[0]);
+		    	    	//Cuenta cuenta = new Cuenta();
+		    	    	System.out.println(objetoCliente.ELIMINAR_CLIENTE(codigoCliente));    	    		
+		    	    	
+		    			break;
 		    			//en caso de que sea crear cuenta
 		    		case "CREAR_CUENTA":
 		    			//cortamos la cadena extraemos lo que esta dentro del parentesis
@@ -155,7 +135,7 @@ public class Mando {
 		    	    	String nombreBuscado = "Pedro";
 		    	    	 posicionEncontrada = -1;
 		    	    	for (int i = 0; i < Cuenta.miListaCuenta.size(); i++) {
-		    	    	    Cuenta cuenta = Cuenta.miListaCuenta.get(i);
+		    	    		Cuenta cuenta = Cuenta.miListaCuenta.get(i);
 		    	    	    //verificamos si hay una cuenta con el mismo codigo en la lista
 		    	    	    if (cuenta.codigoCuenta==codigoCuenta) {
 		    	    	        posicionEncontrada = i;
@@ -169,61 +149,32 @@ public class Mando {
 		    	    	  //creamos cliente por medio del metodo crear cliente de la clase Cliente
 		    	    		System.out.println(objetoCuenta.CREAR_CUENTA(codigoCuenta, nombreCuenta, codigoCliente, depositoInicial, quetzales));
 		    	    		//contabilizamos clientes creados
-		    	    		cant_CuentasCreadas++;
 		    	    	}
 		    	    	break;
 		    	    	
 		    			//en caso de que sea eliminar cuenta
 		    		case "ELIMINAR_CUENTA":
 		    			//cortamos la cadena extraemos lo que esta dentro del parentesis
-		    	    	 datos = texto.substring(texto.indexOf('(')+1,texto.indexOf(')'));
-		    	    	//comprobamos que se halla extraido correctamente
-		    	    	System.out.println(datos);
+		    	    	datos = texto.substring(texto.indexOf('(')+1,texto.indexOf(')'));
 		    	    	partes = new String[0];
 		    	    	partes = datos.split(",");
 		    	    	objetoCuenta = new Cuenta();
-		    	    	int cod = Integer.parseInt(datos);
-		    	    	codigoCuenta = cod;
-		    	    	//prueva
-		    	    	posicionEncontrada = -1;
-                        
-		    	    	for (int i = 0; i < Cuenta.miListaCuenta.size(); i++) {
-		    	    	    Cuenta cuenta = Cuenta.miListaCuenta.get(i);
-		    	    	    //System.out.print(i+" Posision: "+cuenta+" codigo: "+codigoCuenta+"codigo clse: "+cuenta.codigoCuenta+"\n");
-		    	    	    //verificamos si hay una cuenta con el mismo codigo en la lista
-		    	    	    int a=codigoCuenta;
-		    	    	    int b=cuenta.codigoCuenta;
-		    	    	    //buscamos la cuenta 
-		    	    	    if (a==2) {
-		    	    	    	 //Cuenta.miListaCuenta.get(posicionEncontrada);
-		    	    	        posicionEncontrada = i;
-		    	    	        break;     
-		    	    	    }
-		    	    	}
-		    	    	if (posicionEncontrada != -1) {
-		    	    		Mando.errores++;
-		    	    	    System.out.println("La cuenta no fue encontrada" );
-		    	    	} else {
-		    	    		int c = posicionEncontrada+1;
-		    	    		Cuenta cuenta = new Cuenta();
-		    	    		System.out.println(cuenta.ELIMINAR_CUENTA(codigoCuenta));    	    		
-		    	    		//Cuenta cuenta = Cuenta.miListaCuenta.get(c);
-		    	    		Cuenta.miListaCuenta.remove(c);    	    	 
-		    	    	}
+		    	    	codigoCuenta = Integer.parseInt(partes[0]);
+		    	    	Cuenta cuenta = new Cuenta();
+		    	    	System.out.println(cuenta.ELIMINAR_CUENTA(codigoCuenta));    	    		
+		    	    	
 		    			break;
 		    			
-		//en caso de que sea deposito
+		               //en caso de que sea deposito
 		    		case "DEPOSITO":
 		    			//cortamos la cadena extraemos lo que esta dentro del parentesis
 		    	    	 datos = texto.substring(texto.indexOf('(')+1,texto.indexOf(')'));
 		    			//instanciamos la clase cliente
 		    	    	Transacciones depositos = new Transacciones(0,0.0,null,null);
-		    	    	//asignamos la cadena datos a la cadena persona
-		    	    	persona = datos;
 		    	    	//cortamos la cadena persona para poder extraer dato por dato
 		    	    	//asi mismo guardamos cada dato extraido en el array de tipo string llamado partes
 		    	    	partes = new String[0];
-		    	    	partes = persona.split(",");
+		    	    	partes = datos.split(",");
 		    	    	
 		    	    	//asignamos cada una de las partes del array de forma ordenada a a cada atributo del objeto
 		    	    	depositos.codigoCuenta = Integer.parseInt(partes[0]);
@@ -237,7 +188,7 @@ public class Mando {
 		    			
 		    			//en caso de que sea retiro
 		    		case "RETIRO":
-//cortamos la cadena extraemos lo que esta dentro del parentesis
+                        //cortamos la cadena extraemos lo que esta dentro del parentesis
 		    	    	
 		    			datos = texto.substring(texto.indexOf('(')+1,texto.indexOf(')'));
 		    
@@ -259,11 +210,11 @@ public class Mando {
 		    	    	fec =partes[2].replaceAll("\"", ""); 	
 		    	    	formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		    	    	LocalDate fechaDebito = LocalDate.parse(fec, formatter);
-		    	    	LocalDate fechaRetiro = null;
-		    	    	System.out.print(retiro.RETIRO(codigoCuenta, monto, fechaRetiro,fechaDebito));
+		    	    	LocalDate fechaDeposito = null;
+		    	    	System.out.print(retiro.RETIRO(codigoCuenta, monto, fechaDeposito,fechaDebito));
 		    			break;
-		//si no se reconoce la opcion
-		    		default:
+	                	//si no se reconoce la opcion
+		    		    default:
 		    			Mando.errores++;
 		    			System.out.println("Instruccion No Reconocida");
 		    			break;	
@@ -303,81 +254,37 @@ public class Mando {
 		        ex.printStackTrace();
 		    }
 		}
-		//cramos reporte 
-		try {
-			//creamos el archivo
-			 // Crear objeto File
-	        File archivo = new File("C:/reporte.txt");
-	        
-	        // Verificar si el archivo ya existe
-	        if (archivo.exists()) {
-	            System.out.println("El archivo ya existe 1");
-	            FileWriter escritor = new FileWriter(archivo);
-	         // Escribir en el archivo de texto
-	            escritor.write("------------------------------------------------------------------------------\n"
-	         		        + "------------------------Reporte De Acciones-----------------------------------\n"
-	         		        + "------------------------------------------------------------------------------\n"
-	     					+ "\n"
-	     					+ "|Cantidad de Clientes creados:                             "+cant_ClientesCreados+"   |\n"
-	     					+ "|Cantidad de Clientes eliminados:                          "+cant_ClientesEliminados+"   |\n"
-	     					+ "|Cantidad de Cuentas creadas:                              "+cant_CuentasCreadas+"  |\n"
-	     					+ "|Cantidad de Cuentas eliminadas:                           "+cant_CuentasEliminadas+"   |\n"
-	     					+ "|Cantidad de depósitos realizados por cuenta:              "+cant_DepCuenta+"   |\n"
-	     					+ "|Cantidad de depósitos realizados en general:              "+cant_DepGen+"   |\n"
-	     					+ "|Cantidad de retiros realizados por cuenta:                "+cant_RetGen+"   |\n"
-	     					+ "|Cantidad de retiros realizados en general:                "+cant_RetCuenta+"   |\n"
-	     					+ "|Errores encontrados en el archivo(instrucciones fallidas):"+Mando.errores+"+1   |\n"
-	     					+ "------------------------------------------------------------------------------"
-	     					+ "");
-	                 escritor.close();
-	        } else {
-	            // Crear el archivo de texto
-	            try {
-	                if (archivo.createNewFile()) {
-	                    System.out.println("El archivo ha sido creado");
-	                    // Resto del código para trabajar con el archivo
-	                } else {
-	                    System.out.println("El archivo ya existe 2");
-	                    // Resto del código para manejar el archivo existente
-	                }
-	            } catch (IOException e) {
-	            	Mando.errores++;
-	                System.out.println("Ha ocurrido un error al crear el archivo");
-	                e.printStackTrace();
-	            }
+		
+		
+		
+		
+		//creamos y escribimos o sobreescribimos en un archivo
+		 String contenido = "------------------------------------------------------------------------------\n"
+		 		+ "------------------------Reporte De Acciones-----------------------------------\n"
+		 		+ "------------------------------------------------------------------------------\n"
+		 		+ "|Cantidad de Clientes creados:                             "+cant_ClientesCreados+"   |\n"
+		 		+ "|Cantidad de Clientes eliminados:                          "+cant_ClientesEliminados+"   |\n"
+		 		+ "|Cantidad de Cuentas creadas:                              "+cant_CuentasCreadas+"   |\n"
+		 		+ "|Cantidad de Cuentas eliminadas:                           "+cant_CuentasEliminadas+"   |\n"
+		 		+ "|Cantidad de depósitos realizados por cuenta:              "+cant_DepCuenta+"   |\n"
+		 		+ "|Cantidad de depósitos realizados en general:              "+cant_DepGen+"   |\n"
+		 		+ "|Cantidad de retiros realizados por cuenta:                "+cant_RetGen+"   |\n"
+		 		+ "|Cantidad de retiros realizados en general:                "+cant_RetCuenta+"   |\n"
+		 		+ "|Errores encontrados en el archivo(instrucciones no validas):"+errores+"|\n"
+		 		+ "------------------------------------------------------------------------------\n";
+
+	        try {
+	            File archivo = new File("C:\\reporte.txt");
+	            FileWriter escritorArchivo = new FileWriter(archivo, false);
+	            BufferedWriter escritorBuffer = new BufferedWriter(escritorArchivo);
+	            escritorBuffer.write(contenido);
+	            escritorBuffer.close();
+	            System.out.println("Archivo creado o sobrescrito correctamente.");
+	        } catch (IOException e) {
+	            System.out.println("Ha ocurrido un error al crear o sobrescribir el archivo.");
+	            e.printStackTrace();
 	        }
-			
-			//abrimos archivo y guardamos el reporte
-            // Crear objeto File
-            archivo = new File("C:\\reporte.txt");
-            
-            // Crear objeto FileWriter
-            FileWriter escritor = new FileWriter(archivo);
-            
-            // Escribir en el archivo de texto
-       escritor.write("------------------------------------------------------------------------------\n"
-    		        + "------------------------Reporte De Acciones-----------------------------------\n"
-    		        + "------------------------------------------------------------------------------\n"
-					+ "\n"
-					+ "|Cantidad de Clientes creados:                             "+cant_ClientesCreados+"   |\n"
-					+ "|Cantidad de Clientes eliminados:                          "+cant_ClientesEliminados+"   |\n"
-					+ "|Cantidad de Cuentas creadas:                              "+cant_CuentasCreadas+"  |\n"
-					+ "|Cantidad de Cuentas eliminadas:                           "+cant_CuentasEliminadas+"   |\n"
-					+ "|Cantidad de depósitos realizados por cuenta:              "+cant_DepCuenta+"   |\n"
-					+ "|Cantidad de depósitos realizados en general:              "+cant_DepGen+"   |\n"
-					+ "|Cantidad de retiros realizados por cuenta:                "+cant_RetGen+"   |\n"
-					+ "|Cantidad de retiros realizados en general:                "+cant_RetCuenta+"   |\n"
-					+ "|Errores encontrados en el archivo(instrucciones fallidas):"+errores+"   |\n"
-					+ "------------------------------------------------------------------------------"
-					+ "");
-            escritor.close();
-            
-            // Cerrar el objeto FileWriter
-            escritor.close();
-        } catch (IOException e) {
-            System.out.println("Ha ocurrido un error al guardar la información en el archivo de texto.");
-            e.printStackTrace();
-        }
+		
 		
 		
 		
@@ -392,17 +299,6 @@ public class Mando {
             System.out.println("quetzales: " + persona.quetzales);
 		    System.out.println("--------------------------------------------");
 		}
-		
-		System.out.println("leemos lista transacciones");
-		System.out.println("--------------------------------------------");
-		 for ( Transacciones persona : Transacciones.miListaTrans) {
-	            System.out.println("codigoCuenta: " + persona.codigoCuenta);
-	            System.out.println("monto: " + persona.monto);
-	            System.out.println("fechaDeposito: " + persona.fechaDeposito);
-	            System.out.println("fechaDebito: " + persona.fechaDebito);
-	            System.out.println("--------------------------------------------");
-	        }
-
 		 System.out.println("leemos lista clientes");
 		 System.out.println("--------------------------------------------");
 		for (Cliente vart : Cliente.miListaCliente) {
@@ -413,6 +309,27 @@ public class Mando {
             System.out.println("fechanac: " + vart.fechaNacimiento);
             System.out.println("--------------------------------------------");
 		}
+		
+		System.out.println("leemos lista Depositos");
+		System.out.println("--------------------------------------------");
+		 for ( Transacciones persona : Transacciones.miListaDeposito) {
+	            System.out.println("codigoCuenta: " + persona.codigoCuenta);
+	            System.out.println("monto: " + persona.monto);
+	            System.out.println("fechaDeposito: " + persona.fechaDeposito);
+	            System.out.println("fechaDebito: " + persona.fechaDebito);
+	            System.out.println("--------------------------------------------");
+	        }
+		 System.out.println("leemos lista Retiros");
+			System.out.println("--------------------------------------------");
+			 for ( Transacciones persona : Transacciones.miListaRetiro) {
+		            System.out.println("codigoCuenta: " + persona.codigoCuenta);
+		            System.out.println("monto: " + persona.monto);
+		            System.out.println("fechaDeposito: " + persona.fechaDeposito);
+		            System.out.println("fechaDebito: " + persona.fechaDebito);
+		            System.out.println("--------------------------------------------");
+		        }
+
+		
 	}
 
 }
